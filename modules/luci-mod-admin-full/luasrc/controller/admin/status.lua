@@ -24,8 +24,10 @@ function index()
 	entry({"admin", "status", "realtime", "bandwidth"}, template("admin_status/bandwidth"), _("Traffic"), 2).leaf = true
 	entry({"admin", "status", "realtime", "bandwidth_status"}, call("action_bandwidth")).leaf = true
 
-	entry({"admin", "status", "realtime", "wireless"}, template("admin_status/wireless"), _("Wireless"), 3).leaf = true
-	entry({"admin", "status", "realtime", "wireless_status"}, call("action_wireless")).leaf = true
+	if nixio.fs.access("/etc/config/wireless") then
+		entry({"admin", "status", "realtime", "wireless"}, template("admin_status/wireless"), _("Wireless"), 3).leaf = true
+		entry({"admin", "status", "realtime", "wireless_status"}, call("action_wireless")).leaf = true
+	end
 
 	entry({"admin", "status", "realtime", "connections"}, template("admin_status/connections"), _("Connections"), 4).leaf = true
 	entry({"admin", "status", "realtime", "connections_status"}, call("action_connections")).leaf = true
@@ -137,14 +139,12 @@ function action_connections()
 end
 
 function action_nameinfo(...)
-	local i
-	local rv = { }
-	for i = 1, select('#', ...) do
-		local addr = select(i, ...)
-		local fqdn = nixio.getnameinfo(addr)
-		rv[addr] = fqdn or (addr:match(":") and "[%s]" % addr or addr)
-	end
+	local util = require "luci.util"
 
 	luci.http.prepare_content("application/json")
-	luci.http.write_json(rv)
+	luci.http.write_json(util.ubus("network.rrdns", "lookup", {
+		addrs = { ... },
+		timeout = 5000,
+		limit = 1000
+	}) or { })
 end

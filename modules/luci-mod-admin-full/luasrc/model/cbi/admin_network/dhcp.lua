@@ -68,9 +68,10 @@ se = s:taboption("advanced", Flag, "sequential_ip",
 	translate("Allocate IP addresses sequentially, starting from the lowest available address"))
 se.optional = true
 
-s:taboption("advanced", Flag, "boguspriv",
+bp = s:taboption("advanced", Flag, "boguspriv",
 	translate("Filter private"),
 	translate("Do not forward reverse lookups for local networks"))
+bp.default = bp.enabled
 
 s:taboption("advanced", Flag, "filterwin2k",
 	translate("Filter useless"),
@@ -251,7 +252,7 @@ o:depends("nonwildcard", true)
 
 o = s:taboption("general", DynamicList, "notinterface",
 	translate("Exclude interfaces"),
-	translate("Prevent listening on thise interfaces."))
+	translate("Prevent listening on these interfaces."))
 o.optional = true
 o:depends("nonwildcard", true)
 
@@ -275,6 +276,16 @@ name = s:option(Value, "name", translate("Hostname"))
 name.datatype = "hostname"
 name.rmempty  = true
 
+function name.write(self, section, value)
+	Value.write(self, section, value)
+	m:set(section, "dns", "1")
+end
+
+function name.remove(self, section)
+	Value.remove(self, section)
+	m:del(section, "dns")
+end
+
 mac = s:option(Value, "mac", translate("<abbr title=\"Media Access Control\">MAC</abbr>-Address"))
 mac.datatype = "list(macaddr)"
 mac.rmempty  = true
@@ -284,6 +295,19 @@ ip.datatype = "or(ip4addr,'ignore')"
 
 time = s:option(Value, "leasetime", translate("Lease time"))
 time.rmempty  = true
+
+duid = s:option(Value, "duid", translate("<abbr title=\"The DHCP Unique Identifier\">DUID</abbr>"))
+duid.datatype = "and(rangelength(28,36),hexstring)"
+fp = io.open("/var/hosts/odhcpd")
+if fp then
+	for line in fp:lines() do
+		local net_val, duid_val = string.match(line, "# (%S+)%s+(%S+)")
+		if duid_val then
+			duid:value(duid_val, duid_val)
+		end
+	end
+	fp:close()
+end
 
 hostid = s:option(Value, "hostid", translate("<abbr title=\"Internet Protocol Version 6\">IPv6</abbr>-Suffix (hex)"))
 

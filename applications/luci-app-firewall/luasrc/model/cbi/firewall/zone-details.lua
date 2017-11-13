@@ -21,7 +21,7 @@ nw.init(m.uci)
 
 local zone = fw:get_zone(arg[1])
 if not zone then
-	luci.http.redirect(dsp.build_url("admin/network/firewall/zones"))
+	luci.http.redirect(ds.build_url("admin/network/firewall/zones"))
 	return
 else
 	m.title = "%s - %s" %{
@@ -126,7 +126,7 @@ msrc = s:taboption("advanced", DynamicList, "masq_src",
 	translate("Restrict Masquerading to given source subnets"))
 
 msrc.optional = true
-msrc.datatype = "list(neg(or(uciname,hostname,ip4addr)))"
+msrc.datatype = "list(neg(or(uciname,hostname,ipmask4)))"
 msrc.placeholder = "0.0.0.0/0"
 msrc:depends("family", "")
 msrc:depends("family", "ipv4")
@@ -135,7 +135,7 @@ mdest = s:taboption("advanced", DynamicList, "masq_dest",
 	translate("Restrict Masquerading to given destination subnets"))
 
 mdest.optional = true
-mdest.datatype = "list(neg(or(uciname,hostname,ip4addr)))"
+mdest.datatype = "list(neg(or(uciname,hostname,ipmask4)))"
 mdest.placeholder = "0.0.0.0/0"
 mdest:depends("family", "")
 mdest:depends("family", "ipv4")

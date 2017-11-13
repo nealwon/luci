@@ -24,7 +24,7 @@ s = m:section( SimpleSection,
 	translate("Hints"),
 	translate("Below a list of configuration tips for your system to run Dynamic DNS updates without limitations") )
 
--- ddns_scripts needs to be updated for full functionality
+-- ddns-scripts needs to be updated for full functionality
 if not CTRL.service_ok() then
 	local so = s:option(DummyValue, "_update_needed")
 	so.titleref = DISP.build_url("admin", "system", "packages")
@@ -116,9 +116,9 @@ if not DDNS.has_forceip then
 		value = value .. "<br />- " ..
 			translate("You should install 'wget' or 'curl' or 'uclient-fetch' package.")
 	end
-	if not (DDNS.has_bindhost or DDNS.has_hostip) then
+	if not DDNS.has_bindhost then
 		value = value .. "<br />- " ..
-			translate("You should install 'bind-host' or 'knot-host' or 'drill' or 'hostip' package for DNS requests.")
+			translate("You should install 'bind-host' or 'knot-host' or 'drill' package for DNS requests.")
 	end
 	fi.value = value
 end

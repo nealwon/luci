@@ -23,8 +23,11 @@ function index()
 		s_general	= _("General plugins"),
 		s_network	= _("Network plugins"),
 
+		apcups		= _("APC UPS"),
 		conntrack	= _("Conntrack"),
+		contextswitch	= _("Context Switches"),
 		cpu			= _("Processor"),
+		cpufreq		= _("CPU Frequency"),
 		csv			= _("CSV Output"),
 		df			= _("Disk Space Usage"),
 		disk		= _("Disk Usage"),
@@ -49,6 +52,7 @@ function index()
 		sensors     = _("Sensors"),
 		splash_leases = _("Splash Leases"),
 		tcpconns	= _("TCP Connections"),
+		thermal	= 	_("Thermal"),
 		unixsock	= _("UnixSock"),
 		uptime		= _("Uptime")
 	}
@@ -56,8 +60,12 @@ function index()
 	-- our collectd menu
 	local collectd_menu = {
 		output  = { "csv", "network", "rrdtool", "unixsock" },
-		general = { "cpu", "df", "disk", "email", "entropy", "exec", "irq", "load", "memory", "nut", "processes", "sensors", "uptime" },
-		network = { "conntrack", "dns", "interface", "iptables", "netlink", "olsrd", "openvpn", "ping", "splash_leases", "tcpconns", "iwinfo" }
+		general = { "apcups", "contextswitch", "cpu", "cpufreq", "df",
+			"disk", "email", "entropy", "exec", "irq", "load", "memory",
+			"nut", "processes", "sensors", "thermal", "uptime" },
+		network = { "conntrack", "dns", "interface", "iptables",
+			"netlink", "olsrd", "openvpn", "ping",
+			"splash_leases", "tcpconns", "iwinfo" }
 	}
 
 	-- create toplevel menu nodes
@@ -81,7 +89,7 @@ function index()
 			_entry(
 				{ "admin", "statistics", "collectd", section, plugin },
 				cbi("luci_statistics/" .. plugin ),
-				labels[plugin], j * 10
+				labels[plugin] or plugin, j * 10
 			)
 		end
 

@@ -13,6 +13,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 1.1.1\n"
 
+msgid "APC UPS"
+msgstr ""
+
+msgid "APCUPS Plugin Configuration"
+msgstr ""
+
 msgid "Action (target)"
 msgstr "Action (target)"
 
@@ -36,6 +42,15 @@ msgstr "Base Directory"
 
 msgid "Basic monitoring"
 msgstr "Basic monitoring"
+
+msgid "CPU Context Switches Plugin Configuration"
+msgstr ""
+
+msgid "CPU Frequency"
+msgstr ""
+
+msgid "CPU Frequency Plugin Configuration"
+msgstr ""
 
 msgid "CPU Plugin Configuration"
 msgstr "CPU Plugin Configuration"
@@ -82,6 +97,9 @@ msgstr ""
 msgid "Conntrack Plugin Configuration"
 msgstr ""
 
+msgid "Context Switches"
+msgstr ""
+
 msgid "DF Plugin Configuration"
 msgstr "DF Plugin Configuration"
 
@@ -126,6 +144,9 @@ msgstr "E-Mail Plugin Configuration"
 
 msgid "Email"
 msgstr "Email"
+
+msgid "Empty value = monitor all"
+msgstr ""
 
 msgid "Enable this plugin"
 msgstr "Enable this plugin"
@@ -266,6 +287,9 @@ msgstr "Monitor all local listen ports"
 msgid "Monitor all sensors"
 msgstr ""
 
+msgid "Monitor device(s) / thermal zone(s)"
+msgstr ""
+
 msgid "Monitor devices"
 msgstr "Monitor devices"
 
@@ -274,6 +298,9 @@ msgstr "Monitor disks and partitions"
 
 msgid "Monitor filesystem types"
 msgstr "Monitor filesystem types"
+
+msgid "Monitor host"
+msgstr ""
 
 msgid "Monitor hosts"
 msgstr "Monitor hosts"
@@ -317,6 +344,11 @@ msgstr "Network plugins"
 msgid "Network protocol"
 msgstr "Network protocol"
 
+msgid ""
+"Note: as pages are rendered by user 'nobody', the *.rrd files, the storage "
+"directory and all its parent directories need to be world readable."
+msgstr ""
+
 msgid "Number of threads for data collection"
 msgstr "Number of threads for data collection"
 
@@ -354,6 +386,9 @@ msgid "Ping Plugin Configuration"
 msgstr "Ping Plugin Configuration"
 
 msgid "Port"
+msgstr ""
+
+msgid "Port for apcupsd communication"
 msgstr ""
 
 msgid "Processes"
@@ -478,6 +513,9 @@ msgstr "TTL for ping packets"
 
 msgid "Table"
 msgstr "Table"
+
+msgid "The APCUPS plugin collects statistics about the APC UPS."
+msgstr ""
 
 msgid "The NUT plugin reads information about Uninterruptible Power Supplies."
 msgstr ""
@@ -646,6 +684,12 @@ msgstr ""
 "selected ports."
 
 msgid ""
+"The thermal plugin will monitor temperature of the system. Data is typically "
+"read from /sys/class/thermal/*/temp ( '*' denotes the thermal device to be "
+"read, e.g. thermal_zone1 )"
+msgstr ""
+
+msgid ""
 "The unixsock plugin creates a unix socket which can be used to read "
 "collected data from a running collectd instance."
 msgstr ""
@@ -653,6 +697,18 @@ msgstr ""
 "collected data from a running collectd instance."
 
 msgid "The uptime plugin collects statistics about the uptime of the system."
+msgstr ""
+
+msgid "Thermal"
+msgstr ""
+
+msgid "Thermal Plugin Configuration"
+msgstr ""
+
+msgid "This plugin collects statistics about the processor context switches."
+msgstr ""
+
+msgid "This plugin collects statistics about the processor frequency scaling."
 msgstr ""
 
 msgid ""

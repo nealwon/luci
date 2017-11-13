@@ -31,7 +31,7 @@ has_nslookup	= (SYS.call( [[$(which nslookup) localhost 2>&1 | grep -qF "(null)"
 has_ipv6	= (NXFS.access("/proc/net/ipv6_route") and NXFS.access("/usr/sbin/ip6tables"))
 has_ssl		= (has_wgetssl or has_curlssl or (has_fetch and has_fetchssl))
 has_proxy	= (has_wgetssl or has_curlpxy or has_fetch or has_bbwget)
-has_forceip	= ((has_wgetssl or has_curl or has_fetch) and (has_bindhost or has_hostip))
+has_forceip	= (has_wgetssl or has_curl or has_fetch) -- only really needed for transfer
 has_dnsserver	= (has_bindhost or has_hostip or has_nslookup)
 has_bindnet	= (has_wgetssl or has_curl)
 has_cacerts	= _check_certs()
@@ -57,7 +57,7 @@ end
 function epoch2date(epoch, format)
 	if not format or #format < 2 then
 		local uci = UCI.cursor()
-		format    = uci:get("ddns", "global", "date_format") or "%F %R"
+		format    = uci:get("ddns", "global", "ddns_dateformat") or "%F %R"
 		uci:unload("ddns")
 	end
 	format = format:gsub("%%n", "<br />")	-- replace newline
@@ -67,18 +67,18 @@ end
 
 -- read lastupdate from [section].update file
 function get_lastupd(section)
-	local uci     = UCI.cursor()
-	local run_dir = uci:get("ddns", "global", "run_dir") or "/var/run/ddns"
-	local etime   = tonumber(NXFS.readfile("%s/%s.update" % { run_dir, section } ) or 0 )
+	local uci   = UCI.cursor()
+	local rdir  = uci:get("ddns", "global", "ddns_rundir") or "/var/run/ddns"
+	local etime = tonumber(NXFS.readfile("%s/%s.update" % { rdir, section } ) or 0 )
 	uci:unload("ddns")
 	return etime
 end
 
 -- read PID from run file and verify if still running
 function get_pid(section)
-	local uci     = UCI.cursor()
-	local run_dir = uci:get("ddns", "global", "run_dir") or "/var/run/ddns"
-	local pid     = tonumber(NXFS.readfile("%s/%s.pid" % { run_dir, section } ) or 0 )
+	local uci  = UCI.cursor()
+	local rdir = uci:get("ddns", "global", "ddns_rundir") or "/var/run/ddns"
+	local pid  = tonumber(NXFS.readfile("%s/%s.pid" % { rdir, section } ) or 0 )
 	if pid > 0 and not NX.kill(pid, 0) then
 		pid = 0
 	end

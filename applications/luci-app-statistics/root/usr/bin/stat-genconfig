@@ -255,6 +255,12 @@ end
 
 
 plugins = {
+	apcups = {
+		{ "Host", "Port" },
+		{ },
+		{ }
+	},
+
 	collectd = {
 		{ "BaseDir", "Include", "PIDFile", "PluginDir", "TypesDB", "Interval", "ReadThreads", "Hostname" },
 		{ },
@@ -272,6 +278,18 @@ plugins = {
 		{ },
 		{ }
 	},
+
+	cpufreq	= {
+		{ },
+		{ },
+		{ }
+	},
+
+        contextswitch = {
+                { },
+                { },
+                { }
+        },
 
 	csv	= {
 		{ "DataDir" },
@@ -343,12 +361,6 @@ plugins = {
 		{ }
 	},
 
-	madwifi = {
-		{ "WatchSet" },
-		{ },
-		{ "Interfaces", "WatchAdds" }
-	},
-
 	memory = { 
 		{ },
 		{ },
@@ -417,6 +429,12 @@ plugins = {
 		{ "LocalPorts", "RemotePorts" }
 	},
 
+	thermal	= {
+		{ },
+		{ "IgnoreSelected" },
+		{ "Device" }
+	},
+
 	unixsock = {
 		{ "SocketFile", "SocketGroup", "SocketPerms" },
 		{ },
@@ -449,8 +467,10 @@ preprocess = {
 
 section("collectd")
 
+section("logfile")
+
 for plugin in pairs(plugins) do
-	if plugin ~= "collectd" then
+	if (plugin ~= "collectd") and (plugin ~= "logfile") then
 		section( plugin )
 	end
 end

@@ -56,7 +56,7 @@ msgid "Custom Rules"
 msgstr ""
 
 msgid ""
-"Custom rules allow you to execute arbritary iptables commands which are not "
+"Custom rules allow you to execute arbitrary iptables commands which are not "
 "otherwise covered by the firewall framework. The commands are executed after "
 "each firewall restart, right after the default ruleset has been loaded."
 msgstr ""
@@ -266,6 +266,9 @@ msgid ""
 msgstr ""
 
 msgid "Redirect matched incoming traffic to the specified internal host"
+msgstr ""
+
+msgid "Restart Firewall"
 msgstr ""
 
 msgid "Restrict Masquerading to given destination subnets"

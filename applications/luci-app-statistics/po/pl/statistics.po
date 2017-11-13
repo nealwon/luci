@@ -14,6 +14,12 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.0.6\n"
 
+msgid "APC UPS"
+msgstr ""
+
+msgid "APCUPS Plugin Configuration"
+msgstr ""
+
 msgid "Action (target)"
 msgstr "Akcja (cel)"
 
@@ -37,6 +43,15 @@ msgstr "Główny katalog"
 
 msgid "Basic monitoring"
 msgstr "Podstawowy monitoring"
+
+msgid "CPU Context Switches Plugin Configuration"
+msgstr ""
+
+msgid "CPU Frequency"
+msgstr ""
+
+msgid "CPU Frequency Plugin Configuration"
+msgstr ""
 
 msgid "CPU Plugin Configuration"
 msgstr "Konfiguracja CPU"
@@ -83,6 +98,9 @@ msgstr "Conntrack"
 msgid "Conntrack Plugin Configuration"
 msgstr "Konfiguracja wtyczki Conntrack"
 
+msgid "Context Switches"
+msgstr ""
+
 msgid "DF Plugin Configuration"
 msgstr "Konfiguracja wtyczki DF"
 
@@ -127,6 +145,9 @@ msgstr "Konfiguracja wtyczki E-mail"
 
 msgid "Email"
 msgstr "E-mail"
+
+msgid "Empty value = monitor all"
+msgstr ""
 
 msgid "Enable this plugin"
 msgstr "Włącz tę wtyczkę"
@@ -269,6 +290,9 @@ msgstr "Monitoruj wszystkie lokalne otwarte porty"
 msgid "Monitor all sensors"
 msgstr ""
 
+msgid "Monitor device(s) / thermal zone(s)"
+msgstr ""
+
 msgid "Monitor devices"
 msgstr "Monitoruj urządzenia"
 
@@ -277,6 +301,9 @@ msgstr "Monitoruj dyski i partycje"
 
 msgid "Monitor filesystem types"
 msgstr "Monitoruj system plików"
+
+msgid "Monitor host"
+msgstr ""
 
 msgid "Monitor hosts"
 msgstr "Monitoruj hosty"
@@ -320,6 +347,11 @@ msgstr "Wtyczki sieciowe"
 msgid "Network protocol"
 msgstr "Protokoły sieciowe"
 
+msgid ""
+"Note: as pages are rendered by user 'nobody', the *.rrd files, the storage "
+"directory and all its parent directories need to be world readable."
+msgstr ""
+
 msgid "Number of threads for data collection"
 msgstr "Liczba wątków do zbierania danych"
 
@@ -358,6 +390,9 @@ msgstr "Konfiguracja wtyczki Ping"
 
 msgid "Port"
 msgstr "Port"
+
+msgid "Port for apcupsd communication"
+msgstr ""
 
 msgid "Processes"
 msgstr "Procesy"
@@ -482,6 +517,9 @@ msgstr "TTL dla pakietów ping"
 
 msgid "Table"
 msgstr "Tabela"
+
+msgid "The APCUPS plugin collects statistics about the APC UPS."
+msgstr ""
 
 msgid "The NUT plugin reads information about Uninterruptible Power Supplies."
 msgstr "Wtyczka Nut Informuje o Nie przerywalnym Zasilaniu"
@@ -654,6 +692,12 @@ msgstr ""
 "wybranych portów."
 
 msgid ""
+"The thermal plugin will monitor temperature of the system. Data is typically "
+"read from /sys/class/thermal/*/temp ( '*' denotes the thermal device to be "
+"read, e.g. thermal_zone1 )"
+msgstr ""
+
+msgid ""
 "The unixsock plugin creates a unix socket which can be used to read "
 "collected data from a running collectd instance."
 msgstr ""
@@ -661,6 +705,18 @@ msgstr ""
 "danych zebranych z bieżącej instancji collectd."
 
 msgid "The uptime plugin collects statistics about the uptime of the system."
+msgstr ""
+
+msgid "Thermal"
+msgstr ""
+
+msgid "Thermal Plugin Configuration"
+msgstr ""
+
+msgid "This plugin collects statistics about the processor context switches."
+msgstr ""
+
+msgid "This plugin collects statistics about the processor frequency scaling."
 msgstr ""
 
 msgid ""
