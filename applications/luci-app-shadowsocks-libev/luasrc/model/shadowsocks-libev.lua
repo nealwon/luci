@@ -23,7 +23,7 @@ function values_actions(o)
 end
 
 function values_redir(o, xmode)
-	o.map.uci.foreach("shadowsocks-libev", "ss_redir", function(sdata)
+	o.map.uci:foreach("shadowsocks-libev", "ss_redir", function(sdata)
 		local disabled = ucival_to_bool(sdata["disabled"])
 		local sname = sdata[".name"]
 		local mode = sdata["mode"] or "tcp_only"
@@ -37,12 +37,13 @@ function values_redir(o, xmode)
 end
 
 function values_serverlist(o)
-	o.map.uci.foreach("shadowsocks-libev", "server", function(sdata)
+	o.map.uci:foreach("shadowsocks-libev", "server", function(sdata)
 		local sname = sdata[".name"]
 		local server = sdata["server"]
 		local server_port = sdata["server_port"]
 		if server and server_port then
-			local desc = "%s - %s:%s" % {sname, sdata["server"], sdata["server_port"]}
+			local disabled = ucival_to_bool(sdata[".disabled"]) and " - disabled" or ""
+			local desc = "%s - %s:%s%s" % {sname, server, server_port, disabled}
 			o:value(sname, desc)
 		end
 	end)
@@ -75,9 +76,11 @@ function options_client(s, tab)
 	o.datatype = "port"
 end
 
-function options_server(s, tab)
+function options_server(s, opts)
 	local o
 	local optfunc
+	local tab = opts and opts.tab or nil
+	local row = opts and opts.row or false
 
 	if tab == nil then
 		optfunc = function(...) return s:option(...) end
@@ -95,13 +98,17 @@ function options_server(s, tab)
 	for _, m in ipairs(methods) do
 		o:value(m)
 	end
-	o = optfunc(Value, "key", translate("Key (base64 encoding)"))
-	o.datatype = "base64"
-	o.password = true
-	o.size = 12
 	o = optfunc(Value, "password", translate("Password"))
 	o.password = true
 	o.size = 12
+	if not row then
+		o = optfunc(Value, "key", translate("Key (base64)"))
+		o.datatype = "base64"
+		o.password = true
+		o.size = 12
+		optfunc(Value, "plugin", translate("Plugin"))
+		optfunc(Value, "plugin_opts", translate("Plugin Options"))
+	end
 end
 
 function options_common(s, tab)
@@ -121,6 +128,7 @@ function options_common(s, tab)
 	s:taboption(tab, Flag, "verbose", translate("Verbose"))
 	s:taboption(tab, Flag, "ipv6_first", translate("IPv6 First"), translate("Prefer IPv6 addresses when resolving names"))
 	s:taboption(tab, Flag, "fast_open", translate("Enable TCP Fast Open"))
+	s:taboption(tab, Flag, "no_delay", translate("Enable TCP_NODELAY"))
 	s:taboption(tab, Flag, "reuse_port", translate("Enable SO_REUSEPORT"))
 end
 
@@ -137,14 +145,11 @@ function cfgvalue_overview(sdata)
 		cfgvalue_overview_(sdata, lines, names_options_common)
 		cfgvalue_overview_(sdata, lines, {
 			"bind_address",
-			"manager_address",
 		})
 	elseif stype == "ss_local" or stype == "ss_redir" or stype == "ss_tunnel" then
 		cfgvalue_overview_(sdata, lines, names_options_client)
 		if stype == "ss_tunnel" then
 			cfgvalue_overview_(sdata, lines, {"tunnel_address"})
-		elseif stype == "ss_redir" then
-			cfgvalue_overview_(sdata, lines, {"disable_sni"})
 		end
 		cfgvalue_overview_(sdata, lines, names_options_common)
 	else
@@ -155,7 +160,7 @@ function cfgvalue_overview(sdata)
 	local value = {
 		[".name"] = sname,
 		name = '%s.<var>%s</var>' % {stype, sname},
-		overview = table.concat(lines, "</br>"),
+		overview = table.concat(lines, "<br />"),
 		disabled = ucival_to_bool(sdata["disabled"]),
 	}
 	return key, value
@@ -200,8 +205,8 @@ function option_install_package(s, tab)
 
 	function p_install.write()
 		return luci.http.redirect(
-			luci.dispatcher.build_url("admin/system/packages") ..
-			"?submit=1&install=%s" % opkg_package
+			luci.dispatcher.build_url("admin/system/opkg") ..
+			"?query=%s" % opkg_package
 		)
 	end
 end
@@ -212,6 +217,8 @@ names_options_server = {
 	"method",
 	"key",
 	"password",
+	"plugin",
+	"plugin_opts",
 }
 
 names_options_client = {
@@ -224,6 +231,7 @@ names_options_common = {
 	"verbose",
 	"ipv6_first",
 	"fast_open",
+	"no_delay",
 	"reuse_port",
 	"mode",
 	"mtu",
